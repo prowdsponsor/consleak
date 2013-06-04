@@ -2,6 +2,28 @@ name:              consleak
 version:           0.0.0
 cabal-version:     >= 1.8
 build-type:        Simple
+author:            Felipe Lessa
+maintainer:        Felipe Lessa <felipe.lessa@loyful.com>
+copyright:         (c) 2013 Loyful
+category:          Yesod
+license:           BSD3
+license-file:      LICENSE
+synopsis:          consleak, an example Yesod app used on a tutorial.
+description:
+    This is Consleak, an example Yesod app used on a tutorial.
+    The tutorial was presented on the 4th São Paulo Haskellers
+    Meeting by Felipe Lessa.  If you want to follow the tutorial,
+    clone this package's git repo and read the `README.md`.
+    .
+    Consleak is an extremely minimal StackOverflow clone.  The
+    purpose of this software is not to replace StackOverflow or
+    any other production software, just to illustrate some Yesod
+    concepts.
+
+
+source-repository head
+  type:     git
+  location: git://github.com/loyful/consleak.git
 
 Flag dev
     Description:   Turn on development settings, like auto-reload templates.
