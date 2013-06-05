@@ -1,4 +1,10 @@
 <h1>#{questionTitle question}
 <p>#{questionDescription question}
 
+<h1>_{MsgPostAnAnswer}
+<form method=post action=@{QuestionR questionId} enctype=#{formEnctype}>
+  ^{formWidget}
+  <input type="submit" value=_{MsgQuestionSubmit}>
+
+
 <a href=@{HomeR}>_{MsgBackToHomepage}

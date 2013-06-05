@@ -8,4 +8,10 @@ QuestionPosted question@Question: Your question "#{questionTitle question}" has 
 
 PostedQuestions: Posted questions
 
+PostAnAnswer: Post an answer
+
+AnswerText: Your answer
+
+AnswerPosted: Thank you!  Your answer has been posted!
+
 BackToHomepage: Back to the home page

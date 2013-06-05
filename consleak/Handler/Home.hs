@@ -37,6 +37,27 @@ questionForm = renderDivs $
 getQuestionR :: QuestionId -> Handler RepHtml
 getQuestionR questionId = do
   question <- runDB $ get404 questionId
+  (formWidget, formEnctype) <- generateFormPost (answerForm questionId)
   defaultLayout $ do
     setTitleI (questionTitle question)
     $(widgetFile "question")
+
+
+postQuestionR :: QuestionId -> Handler RepHtml
+postQuestionR questionId = do
+  ((result, _formWidget), _formEnctype) <- runFormPost (answerForm questionId)
+  case result of
+    FormSuccess answer -> do
+      _answerId <- runDB $ insert answer
+      setMessageI MsgAnswerPosted
+      redirect (QuestionR questionId)
+    _ -> do
+      setMessage "Error with question form"
+      redirect (QuestionR questionId)
+
+
+answerForm :: QuestionId -> Form Answer
+answerForm questionId = renderDivs $
+  Answer
+    <$> pure questionId
+    <*> (unTextarea <$> areq textareaField (fieldSettingsLabel MsgAnswerText) Nothing)

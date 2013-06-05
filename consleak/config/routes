@@ -5,4 +5,4 @@
 /robots.txt RobotsR GET
 
 /                     HomeR     GET POST
-/question/#QuestionId QuestionR GET
+/question/#QuestionId QuestionR GET POST
