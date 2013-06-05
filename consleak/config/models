@@ -13,5 +13,9 @@ Question
     title       Text
     description Text
 
+Answer
+    for  QuestionId
+    text Text
+
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)
