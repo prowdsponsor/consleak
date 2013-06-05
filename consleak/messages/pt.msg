@@ -1,18 +1,18 @@
-Welcome: Welcome to Consleak!
+Welcome: Bem-vindo ao Consleak!
 
-QuestionTitle: Your question
-QuestionDescription: Please elaborate
-QuestionSubmit: Post question!
+QuestionTitle: Sua pergunta
+QuestionDescription: Por favor elabore
+QuestionSubmit: Fazer pergunta!
 
-QuestionPosted question@Question: Your question "#{questionTitle question}" has been posted!
+QuestionPosted question: Sua pergunta "#{questionTitle question}" foi feita!
 
-PostedQuestions: Posted questions
+PostedQuestions: Perguntas feitas
 
-PostedAnswers: Posted answers
-PostAnAnswer: Post an answer
+PostedAnswers: Respostas dadas
+PostAnAnswer: Dar uma resposta
 
-AnswerText: Your answer
+AnswerText: Sua resposta
 
-AnswerPosted: Thank you!  Your answer has been posted!
+AnswerPosted: Muito obrigado!  Sua resposta foi dada!
 
-BackToHomepage: Back to the home page
+BackToHomepage: Voltar à página inicial
