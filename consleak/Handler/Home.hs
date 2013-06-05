@@ -32,3 +32,8 @@ questionForm = renderDivs $
   Question
     <$>                 areq textField     (fieldSettingsLabel MsgQuestionTitle)       Nothing
     <*> (unTextarea <$> areq textareaField (fieldSettingsLabel MsgQuestionDescription) Nothing)
+
+
+getQuestionR :: QuestionId -> Handler RepHtml
+getQuestionR questionId = do
+  undefined

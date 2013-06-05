@@ -6,5 +6,7 @@
 
 <h2>_{MsgPostedQuestions}
 <ul .questions>
-  $forall Entity _questionId question <- questions
-    <li>#{questionTitle question}
+  $forall Entity questionId question <- questions
+    <li>
+      <a href=@{QuestionR questionId}>
+        #{questionTitle question}
