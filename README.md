@@ -1,7 +1,5 @@
-Warning: This is not the first nor the last checkpoint.  If
-you're in the middle of the tutorial, just ignore this warning.
-If you've just arrived here, you'll probably want to take a look
-at either one of these checkpoints.
+Note: This is the last checkpoint. If you want to complete this
+tutorial, please check "How to follow this tutorial" below.
 
 Yesod tutorial from 4th São Paulo Haskellers Meeting
 ====================================================
