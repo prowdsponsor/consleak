@@ -1,143 +1,71 @@
-Checkpoint 02
+Checkpoint 03
 =============
 
-We already have a way of adding questions.  But how about answers?
+You may have noticed that we have been using messages everywhere
+but just with English.  For a single language there isn't much
+value in using messages, it's a wasted hassle.  So on this
+checkpoint we'll add support for Portuguese.
 
-As before, we'll start by adding a new entity to `config/models`:
+First of all, create a copy of `messages/en.msg` as `messages/pt.msg`.
 
-    Answer
-        for  QuestionId
-        text Text
+    $ cp messages/en.msg messages/pt.msg
 
-Besides the answer itself, we'll store a reference to the
-Question this Answer is answering.  We do this by creating a
-field whose type is the ID of the referred entity.  Persistent
-will create a foreign key for us when migrating the database.
+Now translate those messages from English to Portuguese.
 
-To be able to add answers, we'll create a new route for the
-questions.  Open the `config/routes` file and add the following
-line:
+    Welcome: Bem-vindo ao Consleak!
 
-    /question/#QuestionId QuestionR GET
+    QuestionTitle: Sua pergunta
+    QuestionDescription: Por favor elabore
+    QuestionSubmit: Fazer pergunta!
 
-If you just do the above, you'll see the following error:
+    QuestionPosted question: Sua pergunta "#{questionTitle question}" foi feita!
 
-    Application.hs:29:1: Not in scope: `getQuestionR'
+    PostedQuestions: Perguntas feitas
 
-It tells you that you need to implement a `getQuestionR` function
-since you've defined a route QuestionR that supports GET
-requests.
+    PostedAnswers: Respostas dadas
+    PostAnAnswer: Dar uma resposta
 
-So move on to `Handler.Home` and add:
+    AnswerText: Sua resposta
 
-    getQuestionR :: QuestionId -> Handler RepHtml
-    getQuestionR questionId = do
-      undefined
+    AnswerPosted: Muito obrigado!  Sua resposta foi dada!
 
-We'll define it later.  Also change `homepage.hamlet` to add a
-link to every question there:
+    BackToHomepage: Voltar à página inicial
 
-    <ul .questions>
-      $forall Entity questionId question <- questions
-        <li>
-          <a href=@{QuestionR questionId}>
-            #{questionTitle question}
-
-Check <http://localhost:3000/> again.  You should see a link on
-each question you've posted leading to a page that just yells
-`Prelude.undefined`.
-
-With this in place, let's create a new template `question` by
-creating a `templates/question.hamlet` file:
-
-    -- templates/question.hamlet
-    <h1>#{questionTitle question}
-    <p>#{questionDescription question}
-
-
-    -- Handler.Home
-    getQuestionR :: QuestionId -> Handler RepHtml
-    getQuestionR questionId = do
-      question <- runDB $ get404 questionId
-      defaultLayout $ do
-        setTitleI (questionTitle question)
-        $(widgetFile "question")
-
-To add support for answering questions, we'll need to create
-another form similar to `questionForm`:
-
-
-    -- Handler.Home
-    getQuestionR :: QuestionId -> Handler RepHtml
-    getQuestionR questionId = do
-      ...runDB...
-      (formWidget, formEnctype) <- generateFormPost (answerForm questionId)
-      ...defaultLayout...
-
-    postQuestionR :: QuestionId -> Handler RepHtml
-    postQuestionR questionId = do
-      ((result, _formWidget), _formEnctype) <- runFormPost (answerForm questionId)
-      case result of
-        FormSuccess answer -> do
-          _answerId <- runDB $ insert answer
-          setMessageI MsgAnswerPosted
-          redirect (QuestionR questionId)
-        _ -> do
-          setMessage "Error with question form"
-          redirect (QuestionR questionId)
-
-    answerForm :: QuestionId -> Form Answer
-    answerForm questionId = renderDivs $
-      Answer
-        <$> pure questionId
-        <*> (unTextarea <$> areq textareaField (fieldSettingsLabel MsgAnswerText) Nothing)
-
-
-    -- config/routes
-    /question/#QuestionId QuestionR GET POST
-
+If you're an attentive reader, you'll note that there has been
+another change besides the translations themselves.  Let's take a look:
 
     -- en.msg
-    PostAnAnswer: Post an answer
-    AnswerText: Your answer
-    AnswerPosted: Thank you!  Your answer has been posted!
+    QuestionPosted question@Question: Your question "#{questionTitle question}" has been posted!
 
+    -- pt.msg
+    QuestionPosted question: Sua pergunta "#{questionTitle question}" foi feita!
 
-    -- question.hamlet
-    <h1>_{MsgPostAnAnswer}
-    <form method=post action=@{QuestionR questionId} enctype=#{formEnctype}>
-      ^{formWidget}
-      <input type="submit" value=_{MsgQuestionSubmit}>
+The English file is the master, so every argument given to a
+message must have an explicit type.  On the other hand, it is not
+necessary to specify the type on the Portuguese file, just the
+argument name.  Note, however, that it _is_ necessary to use the
+same argument name.
 
-Note that now `answerForm` is a function since it takes the
-`QuestionId` as argument.
+And that's it!  If you set your browser's primary language to
+Portuguese you should see the right message file being used.
 
-Finally, let's display the answers as well:
+Actually, there's still one more thing.  `yesod-form` has some
+built-in messages that need to be translated as well.
+Unfortunately, currently you need to manually wrap things up.
+Head to the `Foundation` module and:
 
-    --- Handler.Home
-    getQuestionR questionId = do
-      (question, answers) <-
-        runDB $ (,) <$> get404 questionId
-                    <*> selectList [ AnswerFor ==. questionId ] []
-      ...form...
-      ...defaultLayout...
+    -- at the header
+    import Yesod.Form.I18n.English
+    import Yesod.Form.I18n.Portuguese
 
+    -- line 152
+    instance RenderMessage App FormMessage where
+        renderMessage _ = go
+          where
+            go ("en":_) = englishFormMessage
+            go ("pt":_) = portugueseFormMessage
+            go (_:rest) = go rest
+            go []       = englishFormMessage -- default language
 
-    -- en.msg
-    PostedAnswers: Posted answers
-
-
-    -- question.hamlet
-    $if not (null answers)
-      <h1>_{MsgPostedAnswers}
-      <ul>
-        $forall Entity _answerId answer <- answers
-          <li>#{answerText answer}
-
-Here we use another Hamlet construct, `$if`, which does what you
-expect it to.
-
-
-Congratulations!  You made it to the end of checkpoint 02.
-When you're ready, continue by running `git checkout -f
-checkpoint-03`.
+Congratulations! You made it to the end of checkpoint 03. When
+you're ready, continue by running `git checkout -f checkpoint-04`.
