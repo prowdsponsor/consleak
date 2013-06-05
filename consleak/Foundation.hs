@@ -6,6 +6,8 @@ import Yesod.Static
 import Yesod.Auth
 import Yesod.Auth.BrowserId
 import Yesod.Auth.GoogleEmail
+import Yesod.Form.I18n.English
+import Yesod.Form.I18n.Portuguese
 import Yesod.Default.Config
 import Yesod.Default.Util (addStaticContentExternal)
 import Network.HTTP.Conduit (Manager)
@@ -150,7 +152,12 @@ instance YesodAuth App where
 -- This instance is required to use forms. You can modify renderMessage to
 -- achieve customized and internationalized form validation messages.
 instance RenderMessage App FormMessage where
-    renderMessage _ _ = defaultFormMessage
+    renderMessage _ = go
+      where
+        go ("en":_) = englishFormMessage
+        go ("pt":_) = portugueseFormMessage
+        go (_:rest) = go rest
+        go []       = englishFormMessage -- default language
 
 -- | Get the 'Extra' value, used to hold data from the settings.yml file.
 getExtra :: Handler Extra
