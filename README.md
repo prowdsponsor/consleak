@@ -15,7 +15,7 @@ To prepare your environment, you'll need to:
   2. Update your Cabal database by running `cabal update`.
 
   3. Install the [Yesod Platform](http://www.yesodweb.com/)
-  version 1.2 by running `cabal install yesod-platform-1.2.0.1
+  version 1.2 by running `cabal install yesod-platform-1.2.0.1 yesod-bin
   persistent-sqlite esqueleto`.  Note that by the time you follow
   these instructions there may be a more recent version of the
   Yesod Platform, but this tutorial has been written with this
