@@ -9,4 +9,9 @@ Email
     verkey Text Maybe
     UniqueEmail email
 
+Question
+    title       Text
+    description Text
+
+
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)
