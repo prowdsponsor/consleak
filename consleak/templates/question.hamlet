@@ -1,6 +1,12 @@
 <h1>#{questionTitle question}
 <p>#{questionDescription question}
 
+$if not (null answers)
+  <h1>_{MsgPostedAnswers}
+  <ul>
+    $forall Entity _answerId answer <- answers
+      <li>#{answerText answer}
+
 <h1>_{MsgPostAnAnswer}
 <form method=post action=@{QuestionR questionId} enctype=#{formEnctype}>
   ^{formWidget}

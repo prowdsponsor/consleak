@@ -36,7 +36,9 @@ questionForm = renderDivs $
 
 getQuestionR :: QuestionId -> Handler RepHtml
 getQuestionR questionId = do
-  question <- runDB $ get404 questionId
+  (question, answers) <-
+    runDB $ (,) <$> get404 questionId
+                <*> selectList [ AnswerFor ==. questionId ] []
   (formWidget, formEnctype) <- generateFormPost (answerForm questionId)
   defaultLayout $ do
     setTitleI (questionTitle question)

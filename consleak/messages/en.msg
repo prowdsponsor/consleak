@@ -8,6 +8,7 @@ QuestionPosted question@Question: Your question "#{questionTitle question}" has 
 
 PostedQuestions: Posted questions
 
+PostedAnswers: Posted answers
 PostAnAnswer: Post an answer
 
 AnswerText: Your answer
