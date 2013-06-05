@@ -8,6 +8,7 @@ import Import
 getHomeR :: Handler RepHtml
 getHomeR = do
   (formWidget, formEnctype) <- generateFormPost questionForm
+  questions <- runDB $ selectList [] [Asc QuestionTitle]
   defaultLayout $ do
     setTitleI MsgWelcome
     $(widgetFile "homepage")

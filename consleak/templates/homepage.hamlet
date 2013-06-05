@@ -3,3 +3,8 @@
 <form method=post action=@{HomeR} enctype=#{formEnctype}>
   ^{formWidget}
   <input type="submit" value=_{MsgQuestionSubmit}>
+
+<h2>_{MsgPostedQuestions}
+<ul .questions>
+  $forall Entity _questionId question <- questions
+    <li>#{questionTitle question}
