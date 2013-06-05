@@ -1,0 +1,4 @@
+<h1>#{questionTitle question}
+<p>#{questionDescription question}
+
+<a href=@{HomeR}>_{MsgBackToHomepage}

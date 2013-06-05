@@ -36,4 +36,7 @@ questionForm = renderDivs $
 
 getQuestionR :: QuestionId -> Handler RepHtml
 getQuestionR questionId = do
-  undefined
+  question <- runDB $ get404 questionId
+  defaultLayout $ do
+    setTitleI (questionTitle question)
+    $(widgetFile "question")

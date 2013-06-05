@@ -7,3 +7,5 @@ QuestionSubmit: Post question!
 QuestionPosted question@Question: Your question "#{questionTitle question}" has been posted!
 
 PostedQuestions: Posted questions
+
+BackToHomepage: Back to the home page
